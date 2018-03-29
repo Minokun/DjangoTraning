@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django.db import models
 from DjangoUeditor.models import UEditorField
@@ -17,8 +17,8 @@ class GoodsCategory(models.Model):
 
     name = models.CharField(default="", max_length=30, verbose_name="类别名", help_text="类别名")
     code = models.CharField(default="", max_length=30, verbose_name="类别code", help_text="类别code")
-    desc = models.CharField(default="", verbose_name="类别描述", help_text="类别描述")
-    category_type = models.CharField(choices=CATEGOTY_TYPE, verbose_name="类目级别", help_text="类目级别")
+    desc = models.TextField(default="", verbose_name="类别描述", help_text="类别描述")
+    category_type = models.IntegerField(choices=CATEGOTY_TYPE, verbose_name="类目级别", help_text="类目级别")
     parent_category = models.ForeignKey("self", null=True, blank=True, verbose_name='父类目级别', help_text="父类目级别", related_name="sub_cat")
     is_tab = models.BooleanField(default=False, verbose_name="是否导航", help_text="是否导航")
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
@@ -64,7 +64,7 @@ class Goods(models.Model):
     market_price = models.FloatField(default=0, verbose_name="市场价格")
     shop_price = models.FloatField(default=0, verbose_name="本店价格")
     goods_brief = models.TextField(max_length=500, verbose_name="商品简短描述")
-    goods_desc = UEditorField(verbose_name="内容", imagePath="goods/images/", width=1000, filePath="goods/files/", default='')
+    goods_desc = UEditorField(verbose_name="内容", imagePath="goods/images/", width=1000, height=300, filePath="goods/files/", default='')
     ship_free = models.BooleanField(default=True, verbose_name="是否承担运维")
     goods_front_image = models.ImageField(upload_to="goods/images/", null=True, blank=True, verbose_name="封面图")
     is_new = models.BooleanField(default=False, verbose_name="是否新品")
